@@ -8,11 +8,12 @@ namespace MoviesApi.QueryModels
     public class GetMovies : IPageModel
     {
         public int Take { get; set; }
-        public int? After { get; set; }
+        public int Skip { get; set; }
 
         public GetMovies()
         {
             Take = 10;
+            Skip = 0;
         }
     }
 }

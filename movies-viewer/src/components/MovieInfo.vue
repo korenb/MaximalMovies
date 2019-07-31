@@ -5,21 +5,18 @@
 </template>
 
 <script>
-import { Movie } from "../classes/movie";
+import { store } from '../state/vuex.config';
 
 export default {
   name: "MovieInfo",
-  created() {
-    this.movie = new Movie();
-    this.movie.title = "Interstellar";
-  },
+  store,
   props: {
     id: Number
   },
-  data() {
-    return {
-      movie: null
-    };
+  computed: {
+    movie() {
+      return this.$store.getters.getCurrentMovie(this.id);
+    }
   },
   beforeRouteUpdate(to, from, next) {
     this.id = to.params.id;
@@ -27,7 +24,7 @@ export default {
   },
   methods: {
     goBack() {
-      window.history.length > 1 ? this.$router.go(-1) : this.$router.push("/");
+      window.history.length > 1 ? this.$router.go(-1) : this.$router.push('/');
     }
   }
 };

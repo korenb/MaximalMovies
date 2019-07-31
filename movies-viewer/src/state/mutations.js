@@ -1,0 +1,2 @@
+export const ADD_MOVIES = 'ADD_MOVIES';
+export const MARK_MOVIES_AS_LOADED = 'MARK_MOVIES_AS_LOADED';

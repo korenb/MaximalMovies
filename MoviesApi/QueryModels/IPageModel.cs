@@ -15,8 +15,8 @@ namespace MoviesApi.QueryModels
         /// </summary>
         int Take { get; set; }
         /// <summary>
-        /// Брать объекты после указанного (ID)
+        /// Сколько пропустить
         /// </summary>
-        int? After { get; set; }
+        int Skip { get; set; }
     }
 }

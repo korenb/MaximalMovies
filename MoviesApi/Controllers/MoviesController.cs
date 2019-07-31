@@ -25,14 +25,9 @@ namespace MoviesApi.Controllers
         {
             var movies = _db.Movies
                 .OrderByDescending(e => e.Year)
-                .AsQueryable();
-
-            if (query.After.HasValue)
-            {
-                movies = movies.Where(e => e.Id > query.After.Value);
-            }
-
-            movies = movies.Take(query.Take);
+                .ThenBy(e => e.Id)
+                .Skip(query.Skip)
+                .Take(query.Take);
 
             return Ok(movies.AsNoTracking().ToList());
         }
