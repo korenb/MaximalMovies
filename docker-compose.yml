@@ -4,11 +4,18 @@ services:
         build: 
             context: ./movies-data
             dockerfile: PostgresDockerfile
-        ports:
-            - "5433:5432"
         volumes:
             - movies-database-volume:/var/lib/postgresql/data
         container_name: movies-database
+    api:
+        build:
+            context: ./MoviesApi
+        ports:
+            - "5000:80"
+        # https://docs.docker.com/compose/compose-file/#links
+        links: 
+            - db:moviedatabase
+        container_name: movies-api
 
 volumes:
     movies-database-volume:
