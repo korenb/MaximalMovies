@@ -31,5 +31,13 @@ namespace MoviesApi.Controllers
 
             return Ok(movies.AsNoTracking().ToList());
         }
+
+        [HttpGet("{id:int}")]
+        public IActionResult Get([FromRoute]int id)
+        {
+            var movie = _db.Movies.Find(id);
+
+            return Ok(movie);
+        }
     }
 }
