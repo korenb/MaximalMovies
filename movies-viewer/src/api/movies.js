@@ -1,10 +1,11 @@
 
+const ApiUrl = process.env.VUE_APP_API_MOVIES_URL;
 
 export async function loadMovies(take, skip = null) {
     let query = `?take=${take}`;
     if (skip) query += '&skip=' + skip;
 
-    let response = await fetch('http://localhost:5000/api/movies' + query, {
+    let response = await fetch(ApiUrl + 'api/movies' + query, {
         method: 'GET'
     });
 
@@ -14,7 +15,7 @@ export async function loadMovies(take, skip = null) {
 }
 
 export async function loadMovie(id) {
-    let response = await fetch('http://localhost:5000/api/movies/' + id, {
+    let response = await fetch(ApiUrl + 'api/movies/' + id, {
         method: 'GET'
     });
 

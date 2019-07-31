@@ -16,6 +16,12 @@ services:
         links: 
             - db:moviedatabase
         container_name: movies-api
+    web:
+        build:
+            context: ./movies-viewer
+        ports:
+            - "80:80"
+        container_name: movies-viewer
 
 volumes:
     movies-database-volume:
