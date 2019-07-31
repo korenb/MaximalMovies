@@ -4,6 +4,7 @@ import * as mutations from './mutations';
 import * as actions from './actions';
 import { loadMovies } from '../api/movies';
 import { Movie } from '../classes/movie';
+import { calcTakeParameter } from '../util';
 
 Vue.use(Vuex);
 
@@ -38,7 +39,7 @@ export const store = new Vuex.Store({
             if (state.movies.loaded) return;
             if (!skip && state.movies.initialLoad) return;
 
-            const chunkSize = 10;
+            const chunkSize = calcTakeParameter();
 
             await loadMovies(chunkSize, skip)
                 .then(data => {

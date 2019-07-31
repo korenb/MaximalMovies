@@ -16,6 +16,7 @@ export default {
 <style>
 #app {
   margin: 60px auto 2rem;
-  max-width: 1050px;
+  max-width: 1800px;
+  padding: 0 1rem;
 }
 </style>

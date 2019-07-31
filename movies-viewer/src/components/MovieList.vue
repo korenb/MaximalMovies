@@ -1,6 +1,6 @@
 <template>
   <div class="movie-list">
-    <h1 class="movie-list_title">Cписок фильмов</h1>
+    <h1 class="movie-list_title">Cписок фильмов ({{movies.length}})</h1>
 
     <div class="movie-list_grid">
       <MovieCard v-for="movie in movies" :key="movie.id" :movie="movie"></MovieCard>
@@ -9,6 +9,7 @@
     <div class="movie-list_more-btn">
       <button
         type="button"
+        class="btn"
         @click="loadMore($event)"
         :disabled="loading"
         v-if="movies.length"
@@ -64,5 +65,8 @@ export default {
 }
 .movie-list .movie-list_more-btn {
   text-align: center;
+}
+.movie-list .movie-list_more-btn .btn{
+
 }
 </style>
