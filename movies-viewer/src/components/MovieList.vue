@@ -1,5 +1,7 @@
 <template>
-  <h1>Cписок фильмов</h1>
+  <div class="movie-list">
+    <h1 class="movie-list_title">Cписок фильмов</h1>
+  </div>
 </template>
 
 <script>
