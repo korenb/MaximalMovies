@@ -31,10 +31,18 @@ namespace MoviesApi
                 builder.UseNpgsql(connectionString));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddCors(options =>
+                options.AddDefaultPolicy(policy => policy
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowAnyOrigin()
+                    .AllowCredentials()));
         }
         
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.UseCors();
             app.UseMvc();
         }
     }
