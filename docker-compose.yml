@@ -1,0 +1,14 @@
+version: '3.7'
+services:
+    db:
+        build: 
+            context: ./movies-data
+            dockerfile: PostgresDockerfile
+        ports:
+            - "5433:5432"
+        volumes:
+            - movies-database-volume:/var/lib/postgresql/data
+        container_name: movies-database
+
+volumes:
+    movies-database-volume:

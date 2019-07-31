@@ -1,0 +1,8 @@
+FROM postgres
+
+WORKDIR /docker-entrypoint-initdb.d
+
+ENV POSTGRES_PASSWORD=12345
+ENV POSTGRES_DB=moviesdb
+
+COPY ./movies.sql .
