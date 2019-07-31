@@ -1,12 +1,14 @@
 <template>
-  <div class="movie-list">
+  <div class="movie-list" v-infinite-scroll.root="{offset: 500, onedge: loadMore}">
     <h1 class="movie-list_title">Cписок фильмов ({{movies.length}})</h1>
+
+    <h2 style="padding:20px;position:sticky; top:0; right:0; color:red">{{movies.length}}</h2>
 
     <div class="movie-list_grid">
       <MovieCard v-for="movie in movies" :key="movie.id" :movie="movie"></MovieCard>
     </div>
 
-    <div class="movie-list_more-btn">
+    <!-- <div class="movie-list_more-btn">
       <button
         type="button"
         class="btn"
@@ -14,7 +16,9 @@
         :disabled="loading"
         v-if="movies.length"
       >{{ loading ? 'Loading...' : 'Load more'}}</button>
-    </div>
+    </div>-->
+
+    <div class="movie-list_loaded-text" v-if="loaded">Loaded all {{movies.length}} movies</div>
   </div>
 </template>
 
@@ -35,13 +39,19 @@ export default {
   computed: {
     movies() {
       return this.$store.state.movies.items;
+    },
+    loaded() {
+      return this.$store.state.movies.loaded;
     }
   },
   data: () => {
     return { loading: false };
   },
   methods: {
-    loadMore() {
+    loadMore(e) {
+      if (this.loading || !this.movies.length) return;
+      // console.log(e);
+
       this.loading = true;
       this.$store
         .dispatch(actions.LOAD_MOVIES, this.movies.length)
@@ -66,7 +76,8 @@ export default {
 .movie-list .movie-list_more-btn {
   text-align: center;
 }
-.movie-list .movie-list_more-btn .btn{
-
+.movie-list .movie-list_loaded-text {
+  text-align: center;
+  font-style: italic;
 }
 </style>
