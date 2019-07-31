@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import * as mutations from './mutations';
 import * as actions from './actions';
-import { loadMovies } from '../api/movies';
+import { loadMovies, loadMovie } from '../api/movies';
 import { Movie } from '../classes/movie';
 import { calcTakeParameter } from '../util';
 
@@ -26,12 +26,14 @@ export const store = new Vuex.Store({
         },
         [mutations.MARK_MOVIES_AS_INITIALLY_LOADED](store) {
             store.movies.initialLoad = true;
+        },
+        [mutations.SET_CURRENT_MOVIE](store, movie) {
+            store.movies.current = movie;
         }
     },
     getters: {
-        getCurrentMovie: state => id => {
-            // return state.movies.current;
-            return state.movies.items.find(e => e.id === id);
+        getCurrentMovie: state => {
+            return state.movies.current;
         }
     },
     actions: {
@@ -49,6 +51,16 @@ export const store = new Vuex.Store({
                     if (data.length < chunkSize) {
                         commit(mutations.MARK_MOVIES_AS_LOADED);
                     }
+                });
+        },
+
+        async [actions.LOAD_MOVIE]({ commit, state }, movieId) {
+            if (!movieId) return;
+            if (state.movies.current && state.movies.current.id === movieId) return;
+
+            await loadMovie(movieId)
+                .then(data => {
+                    commit(mutations.SET_CURRENT_MOVIE, Movie.fromObj(data));
                 });
         }
     }

@@ -1,8 +1,6 @@
 <template>
   <div class="movie-list" v-infinite-scroll.root="{offset: 500, onedge: loadMore}">
-    <h1 class="movie-list_title">Cписок фильмов ({{movies.length}})</h1>
-
-    <h2 style="padding:20px;position:sticky; top:0; right:0; color:red">{{movies.length}}</h2>
+    <h1 class="movie-list_title">Cписок фильмов</h1>
 
     <div class="movie-list_grid">
       <MovieCard v-for="movie in movies" :key="movie.id" :movie="movie"></MovieCard>
@@ -48,7 +46,7 @@ export default {
     return { loading: false };
   },
   methods: {
-    loadMore(e) {
+    loadMore() {
       if (this.loading || !this.movies.length) return;
       // console.log(e);
 

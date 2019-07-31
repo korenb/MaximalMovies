@@ -12,3 +12,13 @@ export async function loadMovies(take, skip = null) {
 
     return data;
 }
+
+export async function loadMovie(id) {
+    let response = await fetch('http://localhost:5000/api/movies/' + id, {
+        method: 'GET'
+    });
+
+    var data = response.json();
+
+    return data;
+}
