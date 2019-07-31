@@ -1,4 +1,5 @@
 
+
 export async function loadMovies(take, skip = null) {
     let query = `?take=${take}`;
     if (skip) query += '&skip=' + skip;
@@ -7,5 +8,7 @@ export async function loadMovies(take, skip = null) {
         method: 'GET'
     });
 
-    return response.json();
+    var data = response.json();
+
+    return data;
 }

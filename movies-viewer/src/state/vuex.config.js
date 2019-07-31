@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 import * as mutations from './mutations';
 import * as actions from './actions';
 import { loadMovies } from '../api/movies';
+import { Movie } from '../classes/movie';
 
 Vue.use(Vuex);
 
@@ -21,6 +22,9 @@ export const store = new Vuex.Store({
         },
         [mutations.MARK_MOVIES_AS_LOADED](store) {
             store.movies.loaded = true;
+        },
+        [mutations.MARK_MOVIES_AS_INITIALLY_LOADED](store) {
+            store.movies.initialLoad = true;
         }
     },
     getters: {
@@ -38,8 +42,9 @@ export const store = new Vuex.Store({
 
             await loadMovies(chunkSize, skip)
                 .then(data => {
-                    commit(mutations.ADD_MOVIES, data);
+                    commit(mutations.ADD_MOVIES, data.map(obj => Movie.fromObj(obj)));
 
+                    commit(mutations.MARK_MOVIES_AS_INITIALLY_LOADED);
                     if (data.length < chunkSize) {
                         commit(mutations.MARK_MOVIES_AS_LOADED);
                     }

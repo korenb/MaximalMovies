@@ -2,27 +2,31 @@
   <div class="movie-list">
     <h1 class="movie-list_title">Cписок фильмов</h1>
 
-    <ul>
-      <li v-for="movie in movies" :key="movie.id">{{movie.title}}</li>
-    </ul>
+    <div class="movie-list_grid">
+      <MovieCard v-for="movie in movies" :key="movie.id" :movie="movie"></MovieCard>
+    </div>
 
-    <hr />
-
-    <button
-      type="button"
-      @click="loadMore($event)"
-      :disabled="loading"
-      v-if="movies.length"
-    >{{ loading ? 'Loading...' : 'Load more'}}</button>
+    <div class="movie-list_more-btn">
+      <button
+        type="button"
+        @click="loadMore($event)"
+        :disabled="loading"
+        v-if="movies.length"
+      >{{ loading ? 'Loading...' : 'Load more'}}</button>
+    </div>
   </div>
 </template>
 
 <script>
 import * as actions from "../state/actions";
 import { store } from "../state/vuex.config";
+import MovieCard from "./MovieCard";
 
 export default {
   name: "MovieList",
+  components: {
+    MovieCard
+  },
   store,
   created() {
     this.$store.dispatch(actions.LOAD_MOVIES);
@@ -48,4 +52,17 @@ export default {
 </script>
 
 <style>
+.movie-list .movie-list_title {
+  margin-bottom: 3rem;
+}
+.movie-list .movie-list_grid {
+  display: grid;
+  grid-auto-rows: auto;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  grid-gap: 1rem;
+  margin-bottom: 2rem;
+}
+.movie-list .movie-list_more-btn {
+  text-align: center;
+}
 </style>
